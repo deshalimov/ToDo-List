@@ -18,7 +18,7 @@ var array = ArrayList<Case>()
 // ссылки на элементы (в нашем случае одно текстовое поле).
 // Создадим класс внутри класса который будет в себе хранить ссылки View Holder
 // и назовем его ListHolder и это будет View Holder.
-class ListAdapter: RecyclerView.Adapter<ListAdapter.ListHolder>() {
+class ListAdapter(val listener: Listener): RecyclerView.Adapter<ListAdapter.ListHolder>() {
 
     // Так как ListView является View Holder, нужно унаследоваться от
     // RecyclerView ViewHolder. ViewHolder должен в себе нести View элемент, который будем "надувать".
@@ -26,9 +26,18 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.ListHolder>() {
     class ListHolder(item: View): RecyclerView.ViewHolder (item) {
         private val binding = ListItemBinding.bind(item)
         // Из этой функции будем брать данные
-        fun bind(list: Case) = with(binding){
+        fun bind(list: Case, listener: Listener) = with(binding){
 
             textCheckBox.text = list.name
+
+            if(list.check){
+                textCheckBox.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                checkBox.isChecked = true
+            }
+            else{
+                textCheckBox.paintFlags = Paint.ANTI_ALIAS_FLAG
+                checkBox.isChecked = false
+            }
 
             checkBox.setOnClickListener{
                 if(checkBox.isChecked){
@@ -41,15 +50,8 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.ListHolder>() {
                 }
             }
 
-            deleteButton.setOnClickListener {
-//                val arr = ArrayList<Case>()
-//                array.forEach{
-//                    if(it != list)
-//                        arr.add(it)
-//                }
-//                array = arr
-
-            }
+            deleteButton.setOnClickListener { listener.onClickDelete(list) }
+            textCheckBox.setOnClickListener { listener.onClickToDo(list) }
         }
     }
 
@@ -60,7 +62,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.ListHolder>() {
     }
 
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
-        holder.bind(array[position])
+        holder.bind(array[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -70,10 +72,30 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.ListHolder>() {
     @SuppressLint("NotifyDataSetChanged")
     fun add(case: Case){
         array.add(case)
-        notifyDataSetChanged() // данные изменились и нужно перерисовать
+        // данные изменились и нужно перерисовать
+        notifyDataSetChanged()
     }
 
-    fun printArr(){
-        Log.d("MyLog", "$array")
+    @SuppressLint("NotifyDataSetChanged")
+    fun deleteToDo(case: Case){
+        // Создаем новый список.
+        val arr = ArrayList<Case>()
+        // Перезаписываем в новый список все элементы,
+        // кроме удаленного.
+        array.forEach{
+            if(it != case)
+                arr.add(it)
+        }
+        // Возвращаем новый список.
+        array = arr
+        // Перерисуем заново.
+        notifyDataSetChanged()
+    }
+
+
+    // Чтобы слушать нажатия на Activity необходимо создать интерфейс
+    interface Listener{
+        fun onClickDelete(list: Case)
+        fun onClickToDo(list: Case)
     }
 }

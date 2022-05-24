@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
 import java.io.Serializable
 
-class MainActivity : AppCompatActivity() {
+// Подключаем интерфейс слушателя нажатий на Recycler View: Класс:ListAdapter.Listener:Интерфейс
+class MainActivity : AppCompatActivity(), ListAdapter.Listener {
     lateinit var  binding: ActivityMainBinding
-    private val adapter = ListAdapter()
+    private val adapter = ListAdapter(this)
     var number: Int = 0
     // создадим переменную launcher и укзываем что будем передавать в <> Intent
     private var editLauncher: ActivityResultLauncher<Intent>? = null
@@ -41,14 +42,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun init(){ // инициализация recycler view
         binding.apply {
+            // Задаем в каком виде RecyclerView будет выводиться на экран: LinearLayoutManager
             rcView.layoutManager = LinearLayoutManager(this@MainActivity) // вертикальный список
             rcView.adapter = adapter
             buttonAdd.setOnClickListener{
                 // Запускаем новую активность и запустим call back, который будет ожидать данные
                 // Если указать this, то будет ссылаться на binding, а нужно ссылаться на контекст Main Activity
                 editLauncher?.launch(Intent(this@MainActivity, ActivityEdit::class.java))
-                adapter.printArr()
             }
         }
+    }
+
+    override fun onClickDelete(list: Case) {
+        adapter.deleteToDo(list)
+    }
+
+    override fun onClickToDo(list: Case) {
+        TODO("Not yet implemented")
     }
 }
