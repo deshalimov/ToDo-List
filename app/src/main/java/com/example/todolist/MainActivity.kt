@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity(), ListAdapter.Listener {
     }
 
     override fun onClickToDo(list: Case) {
-        TODO("Not yet implemented")
+        startActivity(Intent(this, ContentActivity::class.java).apply {
+            putExtra("case",list)
+        })
     }
 }
