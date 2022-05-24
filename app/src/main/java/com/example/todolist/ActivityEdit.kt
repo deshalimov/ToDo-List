@@ -29,11 +29,9 @@ class ActivityEdit : AppCompatActivity() {
             // Если поля ввода пустые, окрасить в красный цвет
             if(etText.text.isEmpty())
                     etText.backgroundTintList = ColorStateList.valueOf(Color.RED)
-            if(etNote.text.isEmpty())
-                etNote.backgroundTintList = ColorStateList.valueOf(Color.RED)
 
             // Если поля ввода не пустые
-            if(etText.text.isNotEmpty() && etNote.text.isNotEmpty()) {
+            if(etText.text.isNotEmpty()) {
                 // Заполненный класс нужно отправить через Intent с помощью apply
                 val editIntent = Intent().apply {
                     // Заполним класс Case и укажем ключевое слово.
