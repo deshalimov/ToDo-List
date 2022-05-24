@@ -29,11 +29,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="Text"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:autofillHints="" />
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

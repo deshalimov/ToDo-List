@@ -27,17 +27,30 @@
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/textCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:minHeight="48dp"
                 android:padding="10dp"
-                android:textColor="@color/black" />
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="#000000"
+                android:hapticFeedbackEnabled="false"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
