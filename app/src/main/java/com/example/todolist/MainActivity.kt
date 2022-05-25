@@ -2,6 +2,7 @@ package com.example.todolist
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), ListAdapter.Listener {
 
     override fun onClickDelete(list: Case) {
         adapter.deleteToDo(list)
+        Toast.makeText(this@MainActivity, "Deleted: ${list.name}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onClickToDo(list: Case) {
