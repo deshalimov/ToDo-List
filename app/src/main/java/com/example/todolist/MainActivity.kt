@@ -2,28 +2,35 @@ package com.example.todolist
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.ActivityMainBinding
-import java.io.Serializable
 
 // Подключаем интерфейс слушателя нажатий на Recycler View: Класс:ListAdapter.Listener:Интерфейс
 class MainActivity : AppCompatActivity(), ListAdapter.Listener {
+
+    //val dbManager = DBManager(this)
+
+
     lateinit var  binding: ActivityMainBinding
     private val adapter = ListAdapter(this)
-    var number: Int = 0
     // создадим переменную launcher и укзываем что будем передавать в <> Intent
     private var editLauncher: ActivityResultLauncher<Intent>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        title = "Questionnaire"
+            super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
+        val int = Intent(this@MainActivity, Authorization::class.java)
+        startActivity(int)
 
         // call back новой активности
         // инициализируем переменную launcher где мы будеи ожидать ответ activity
@@ -46,11 +53,6 @@ class MainActivity : AppCompatActivity(), ListAdapter.Listener {
             // Задаем в каком виде RecyclerView будет выводиться на экран: LinearLayoutManager
             rcView.layoutManager = LinearLayoutManager(this@MainActivity) // вертикальный список
             rcView.adapter = adapter
-            buttonAdd.setOnClickListener{
-                // Запускаем новую активность и запустим call back, который будет ожидать данные
-                // Если указать this, то будет ссылаться на binding, а нужно ссылаться на контекст Main Activity
-                editLauncher?.launch(Intent(this@MainActivity, ActivityEdit::class.java))
-            }
         }
     }
 
@@ -64,4 +66,22 @@ class MainActivity : AppCompatActivity(), ListAdapter.Listener {
             putExtra("case",list)
         })
     }
+
+    fun buttonAddToDo(view: View) {
+            // Запускаем новую активность и запустим call back, который будет ожидать данные
+            // Если указать this, то будет ссылаться на binding, а нужно ссылаться на контекст Main Activity
+            editLauncher?.launch(Intent(this@MainActivity, ActivityEdit::class.java))
+    }
+/*
+    override fun onResume() {
+        super.onResume()
+        dbManager.openDB()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbManager.closeDB()
+    }
+
+ */
 }

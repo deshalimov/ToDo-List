@@ -30,7 +30,7 @@ class ListAdapter(val listener: Listener): RecyclerView.Adapter<ListAdapter.List
 
             textCheckBox.text = list.name
 
-            if(list.check){
+            if(list.check == "true"){
                 textCheckBox.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 checkBox.isChecked = true
             }
@@ -42,11 +42,11 @@ class ListAdapter(val listener: Listener): RecyclerView.Adapter<ListAdapter.List
             checkBox.setOnClickListener{
                 if(checkBox.isChecked){
                     textCheckBox.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                    list.check = true
+                    list.check = "true"
                 }
                 else {
                     textCheckBox.paintFlags = Paint.ANTI_ALIAS_FLAG
-                    list.check = false
+                    list.check = "false"
                 }
             }
 
