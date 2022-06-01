@@ -30,6 +30,7 @@ class ActivityEdit : AppCompatActivity() {
     fun onClickButton(view: View) = with(binding){
         val textToDo = etText.text.toString()
         val noteToDo = etNote.text.toString()
+
         // Если поля ввода пустые, окрасить в красный цвет
         if(textToDo.isEmpty())
             etText.backgroundTintList = ColorStateList.valueOf(Color.RED)
@@ -44,7 +45,7 @@ class ActivityEdit : AppCompatActivity() {
             // Заполненный класс нужно отправить через Intent с помощью apply
             val editIntent = Intent().apply {
                 // Заполним класс Case и укажем ключевое слово.
-                putExtra("case", Case(textToDo, noteToDo,"false"))
+                putExtra("case", Case(textToDo, noteToDo,"false", q2.text.toString()))
             }
             // Отправляем результат
             setResult(RESULT_OK, editIntent)

@@ -17,7 +17,7 @@ class ContentActivity : AppCompatActivity() {
         binding.apply {
             etTextContent.text = item.name
             etNoteContent.text = item.note
-
+            ans2.text = item.questions2
         }
     }
 }
